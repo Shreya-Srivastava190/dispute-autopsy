@@ -1307,24 +1307,31 @@ function RiskGraphCard({ graph }: { graph: RiskGraph }) {
           );
           if (!target) return null;
 
-          const midX = (customerX + target.x) / 2;
-          const midY = (customerY + target.y) / 2;
+          // Position along the line closer to the merchant end (62%)
+          // rather than the exact midpoint — with more than one
+          // merchant, midpoints from different edges can land close
+          // together; anchoring nearer each line's own destination
+          // keeps labels from different edges apart.
+          const t = 0.62;
+          const labelBaseX = customerX + t * (target.x - customerX);
+          const labelBaseY = customerY + t * (target.y - customerY);
 
-          // Vertical layout: labels sit beside the line (left/right of
-          // center), not above/below it, since the line itself runs
-          // top-to-bottom. Horizontal layout: labels sit above or below.
-          const idLabelX = isNarrow ? midX + 55 : midX;
+          // Offset direction follows THIS line's own slope (whether it
+          // heads up or down from the customer), not is_current — using
+          // is_current for direction was the bug: it made the current
+          // edge's label push one way and the other edge push the
+          // opposite way, and depending on which merchant was "current"
+          // those two directions could coincidentally converge on the
+          // same point instead of naturally separating.
+          const goesUp = target.y < customerY;
+          const idLabelX = isNarrow ? labelBaseX + 55 : labelBaseX;
           const idLabelY = isNarrow
-            ? midY - 6
-            : edge.is_current
-              ? midY - 26
-              : midY + 18;
+            ? labelBaseY - 6
+            : labelBaseY + (goesUp ? -14 : 18);
           const dateLabelX = idLabelX;
           const dateLabelY = isNarrow
-            ? midY + 7
-            : edge.is_current
-              ? midY - 13
-              : midY + 31;
+            ? labelBaseY + 7
+            : labelBaseY + (goesUp ? -1 : 31);
 
           return (
             <g key={edge.dispute_id}>
