@@ -1284,7 +1284,13 @@ function RiskGraphCard({ graph }: { graph: RiskGraph }) {
 
           const midX = (customerX + target.x) / 2;
           const midY = (customerY + target.y) / 2;
-          const labelYOffset = edge.is_current ? -10 : 14;
+          // Both lines of text sit on the SAME side of the connecting
+          // line (both above, or both below) with enough gap from the
+          // line itself — putting one above and one below caused the
+          // second line to land almost exactly on the stroke and
+          // disappear visually.
+          const idLabelY = edge.is_current ? midY - 26 : midY + 18;
+          const dateLabelY = edge.is_current ? midY - 13 : midY + 31;
 
           return (
             <g key={edge.dispute_id}>
@@ -1300,21 +1306,22 @@ function RiskGraphCard({ graph }: { graph: RiskGraph }) {
               {/* Edge label: dispute ID + date + amount */}
               <text
                 x={midX}
-                y={midY + labelYOffset}
+                y={idLabelY}
                 textAnchor="middle"
                 fontSize="10"
-                fontWeight={edge.is_current ? 700 : 500}
-                fill={edge.is_current ? "#4f46e5" : "#94a3b8"}
+                fontWeight={edge.is_current ? 700 : 600}
+                fill={edge.is_current ? "#4338ca" : "#475569"}
               >
                 {edge.dispute_id}
                 {edge.is_current ? " (current)" : ""}
               </text>
               <text
                 x={midX}
-                y={midY + labelYOffset + 12}
+                y={dateLabelY}
                 textAnchor="middle"
                 fontSize="9"
-                fill={edge.is_current ? "#6366f1" : "#94a3b8"}
+                fontWeight="500"
+                fill={edge.is_current ? "#6366f1" : "#64748b"}
               >
                 {formatShortDate(edge.filed_at)}
                 {edge.amount ? ` · ₹${edge.amount.toLocaleString("en-IN")}` : ""}
