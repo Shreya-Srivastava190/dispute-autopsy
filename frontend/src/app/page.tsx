@@ -137,6 +137,8 @@ type GraphEdge = {
   target: string;
   dispute_id: string;
   reason: string;
+  filed_at?: string;
+  amount?: number;
   is_current: boolean;
 };
 
@@ -1239,17 +1241,25 @@ function RiskGraphCard({ graph }: { graph: RiskGraph }) {
     return null;
   }
 
-  const rowHeight = 70;
-  const height = Math.max(160, merchants.length * rowHeight + 40);
-  const customerX = 70;
+  const rowHeight = 90;
+  const height = Math.max(180, merchants.length * rowHeight + 40);
+  const customerX = 90;
   const customerY = height / 2;
-  const merchantX = 430;
+  const merchantX = 460;
 
   const merchantPositions = merchants.map((m, i) => ({
     node: m,
     x: merchantX,
     y: 40 + i * rowHeight + rowHeight / 2,
   }));
+
+  function formatShortDate(iso?: string) {
+    if (!iso) return "";
+    return new Date(iso).toLocaleDateString("en-IN", {
+      day: "numeric",
+      month: "short",
+    });
+  }
 
   return (
     <div className="rounded-2xl border bg-white p-6 shadow-sm">
@@ -1262,9 +1272,9 @@ function RiskGraphCard({ graph }: { graph: RiskGraph }) {
       </p>
 
       <svg
-        viewBox={`0 0 500 ${height}`}
+        viewBox={`0 0 560 ${height}`}
         className="mt-4 w-full"
-        style={{ maxHeight: 280 }}
+        style={{ maxHeight: 320 }}
       >
         {graph.edges.map((edge) => {
           const target = merchantPositions.find(
@@ -1272,16 +1282,44 @@ function RiskGraphCard({ graph }: { graph: RiskGraph }) {
           );
           if (!target) return null;
 
+          const midX = (customerX + target.x) / 2;
+          const midY = (customerY + target.y) / 2;
+          const labelYOffset = edge.is_current ? -10 : 14;
+
           return (
-            <line
-              key={edge.dispute_id}
-              x1={customerX}
-              y1={customerY}
-              x2={target.x}
-              y2={target.y}
-              stroke={edge.is_current ? "#4f46e5" : "#cbd5e1"}
-              strokeWidth={edge.is_current ? 2.5 : 1.5}
-            />
+            <g key={edge.dispute_id}>
+              <line
+                x1={customerX}
+                y1={customerY}
+                x2={target.x}
+                y2={target.y}
+                stroke={edge.is_current ? "#4f46e5" : "#cbd5e1"}
+                strokeWidth={edge.is_current ? 2.5 : 1.5}
+              />
+
+              {/* Edge label: dispute ID + date + amount */}
+              <text
+                x={midX}
+                y={midY + labelYOffset}
+                textAnchor="middle"
+                fontSize="10"
+                fontWeight={edge.is_current ? 700 : 500}
+                fill={edge.is_current ? "#4f46e5" : "#94a3b8"}
+              >
+                {edge.dispute_id}
+                {edge.is_current ? " (current)" : ""}
+              </text>
+              <text
+                x={midX}
+                y={midY + labelYOffset + 12}
+                textAnchor="middle"
+                fontSize="9"
+                fill={edge.is_current ? "#6366f1" : "#94a3b8"}
+              >
+                {formatShortDate(edge.filed_at)}
+                {edge.amount ? ` · ₹${edge.amount.toLocaleString("en-IN")}` : ""}
+              </text>
+            </g>
           );
         })}
 
@@ -1297,23 +1335,33 @@ function RiskGraphCard({ graph }: { graph: RiskGraph }) {
           {customer.label}
         </text>
 
-        {merchantPositions.map(({ node, x, y }) => (
-          <g key={node.id}>
-            <circle cx={x} cy={y} r={18} fill="#818cf8" />
-            <text
-              x={x + 32}
-              y={y + 4}
-              fontSize="11"
-              fontWeight="600"
-              fill="#334155"
-            >
-              {node.label}
-            </text>
-          </g>
-        ))}
+        {merchantPositions.map(({ node, x, y }) => {
+          const isCurrentTarget = graph.edges.some(
+            (e) => e.target === node.id && e.is_current
+          );
+          return (
+            <g key={node.id}>
+              <circle
+                cx={x}
+                cy={y}
+                r={18}
+                fill={isCurrentTarget ? "#4f46e5" : "#818cf8"}
+              />
+              <text
+                x={x + 32}
+                y={y + 4}
+                fontSize="11"
+                fontWeight="600"
+                fill="#334155"
+              >
+                {node.label}
+              </text>
+            </g>
+          );
+        })}
       </svg>
 
-      <div className="mt-2 flex gap-4 text-xs text-slate-400">
+      <div className="mt-2 flex flex-wrap gap-4 text-xs text-slate-400">
         <span className="flex items-center gap-1">
           <span className="h-2 w-2 rounded-full bg-indigo-600" /> This
           dispute

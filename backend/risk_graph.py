@@ -37,6 +37,8 @@ def build_risk_graph(dispute: dict[str, Any], all_disputes: list[dict[str, Any]]
             "target": d["merchant_id"],
             "dispute_id": d["dispute_id"],
             "reason": d["reason"],
+            "filed_at": d.get("filed_at"),
+            "amount": d.get("amount"),
             "is_current": d["dispute_id"] == dispute["dispute_id"],
         })
 
