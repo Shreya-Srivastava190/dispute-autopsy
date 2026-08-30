@@ -1,0 +1,230 @@
+[
+  {
+    "dispute_id": "disp_001",
+    "reason": "ITEM_NOT_RECEIVED",
+    "amount": 25000,
+    "currency": "INR",
+    "customer_id": "cust_101",
+    "merchant_id": "merch_501",
+    "payment": {
+      "payment_id": "pay_001",
+      "status": "captured",
+      "amount": 25000,
+      "date": "2026-08-10T10:31:00"
+    },
+    "order": {
+      "order_id": "ORD_123",
+      "product": "iPhone 15",
+      "amount": 25000,
+      "status": "fulfilled",
+      "shipping_address": "Ahmedabad, Gujarat"
+    },
+    "delivery": {
+      "status": "delivered",
+      "delivered_at": "2026-08-13T15:42:00",
+      "address_match": true,
+      "signature_available": true,
+      "courier": "BlueDart"
+    },
+    "refund": {
+      "issued": false
+    },
+    "support": {
+      "customer_contacted": true,
+      "merchant_response": true,
+      "conversation": "Customer claimed the item was not received. Merchant provided delivery confirmation."
+    },
+    "filed_at": "2026-08-15T09:00:00",
+    "response_deadline": "2026-08-28T20:00:00"
+  },
+  {
+    "dispute_id": "disp_002",
+    "reason": "ITEM_NOT_RECEIVED",
+    "amount": 8500,
+    "currency": "INR",
+    "customer_id": "cust_102",
+    "merchant_id": "merch_502",
+    "payment": {
+      "payment_id": "pay_002",
+      "status": "captured",
+      "amount": 8500,
+      "date": "2026-08-12T09:10:00"
+    },
+    "order": {
+      "order_id": "ORD_124",
+      "product": "Bluetooth Speaker",
+      "amount": 8500,
+      "status": "fulfilled",
+      "shipping_address": "Pune, Maharashtra"
+    },
+    "delivery": {
+      "status": "not_delivered",
+      "delivered_at": null,
+      "address_match": false,
+      "signature_available": false,
+      "courier": "SpeedEx"
+    },
+    "refund": {
+      "issued": false
+    },
+    "support": {
+      "customer_contacted": true,
+      "merchant_response": false,
+      "conversation": "Customer says the package never arrived. Merchant has not responded yet."
+    },
+    "filed_at": "2026-08-19T10:30:00",
+    "response_deadline": "2026-09-05T10:30:00"
+  },
+  {
+    "dispute_id": "disp_003",
+    "reason": "ITEM_NOT_RECEIVED",
+    "amount": 14200,
+    "currency": "INR",
+    "customer_id": "cust_103",
+    "merchant_id": "merch_503",
+    "payment": {
+      "payment_id": "pay_003",
+      "status": "captured",
+      "amount": 14200,
+      "date": "2026-08-14T18:22:00"
+    },
+    "order": {
+      "order_id": "ORD_125",
+      "product": "Air Fryer",
+      "amount": 14200,
+      "status": "fulfilled",
+      "shipping_address": "Bengaluru, Karnataka"
+    },
+    "delivery": {
+      "status": "delivered",
+      "delivered_at": "2026-08-17T12:05:00",
+      "address_match": true,
+      "signature_available": false,
+      "courier": "BlueDart"
+    },
+    "refund": {
+      "issued": false
+    },
+    "support": {
+      "customer_contacted": true,
+      "merchant_response": true,
+      "conversation": "Delivery marked complete but no signature was captured. Customer maintains they never received it."
+    },
+    "filed_at": "2026-08-19T14:00:00",
+    "response_deadline": "2026-08-30T14:00:00"
+  },
+  {
+    "dispute_id": "disp_004",
+    "reason": "ITEM_NOT_RECEIVED",
+    "amount": 32000,
+    "currency": "INR",
+    "customer_id": "cust_101",
+    "merchant_id": "merch_501",
+    "payment": {
+      "payment_id": "pay_004",
+      "status": "captured",
+      "amount": 32000,
+      "date": "2026-08-05T11:00:00"
+    },
+    "order": {
+      "order_id": "ORD_126",
+      "product": "Office Chair",
+      "amount": 32000,
+      "status": "fulfilled",
+      "shipping_address": "Ahmedabad, Gujarat"
+    },
+    "delivery": {
+      "status": "delivered",
+      "delivered_at": "2026-08-09T14:30:00",
+      "address_match": true,
+      "signature_available": true,
+      "courier": "BlueDart"
+    },
+    "refund": {
+      "issued": true
+    },
+    "support": {
+      "customer_contacted": true,
+      "merchant_response": true,
+      "conversation": "A refund was already issued for this order before the dispute was filed."
+    },
+    "filed_at": "2026-08-11T08:15:00",
+    "response_deadline": "2026-09-10T08:15:00"
+  },
+  {
+    "dispute_id": "disp_005",
+    "reason": "ITEM_NOT_RECEIVED",
+    "amount": 11000,
+    "currency": "INR",
+    "customer_id": "cust_104",
+    "merchant_id": "merch_502",
+    "payment": {
+      "payment_id": "pay_005",
+      "status": "captured",
+      "amount": 11000,
+      "date": "2026-08-18T13:15:00"
+    },
+    "order": {
+      "order_id": "ORD_127",
+      "product": "Wireless Earbuds",
+      "amount": 11000,
+      "status": "fulfilled",
+      "shipping_address": "Nagpur, Maharashtra"
+    },
+    "delivery": {
+      "status": "not_delivered",
+      "delivered_at": null,
+      "address_match": false,
+      "signature_available": false,
+      "courier": "SpeedEx"
+    },
+    "refund": {
+      "issued": false
+    },
+    "support": {
+      "customer_contacted": true,
+      "merchant_response": false,
+      "conversation": "Second unresolved delivery complaint against this merchant this month."
+    },
+    "filed_at": "2026-08-21T11:45:00",
+    "response_deadline": "2026-08-29T11:45:00"
+  },
+  {
+    "dispute_id": "disp_006",
+    "reason": "ITEM_NOT_RECEIVED",
+    "amount": 6200,
+    "currency": "INR",
+    "customer_id": "cust_103",
+    "merchant_id": "merch_504",
+    "payment": {
+      "payment_id": "pay_006",
+      "status": "captured",
+      "amount": 6200,
+      "date": "2026-08-20T16:40:00"
+    },
+    "order": {
+      "order_id": "ORD_128",
+      "product": "Table Lamp",
+      "amount": 6200,
+      "status": "fulfilled",
+      "shipping_address": "Bengaluru, Karnataka"
+    },
+    "delivery": {
+      "status": "delivered",
+      "delivered_at": "2026-08-22T11:20:00",
+      "address_match": true,
+      "signature_available": false,
+      "courier": "Delhivery"
+    },
+    "refund": {
+      "issued": false
+    },
+    "support": {
+      "customer_contacted": true,
+      "merchant_response": true,
+      "conversation": "Same customer as an earlier dispute against a different merchant, same shipping address."
+    },
+    "filed_at": "2026-08-24T09:20:00",
+    "response_deadline": "2026-09-02T09:20:00"
+  }
+]
