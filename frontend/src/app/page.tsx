@@ -1233,25 +1233,29 @@ function CourierRiskCard({ courierRisk }: { courierRisk: CourierRisk }) {
 /* RISK GRAPH CARD */
 /* ------------------------------------------------ */
 
+function useIsNarrow(breakpoint = 480) {
+  const [isNarrow, setIsNarrow] = useState(false);
+
+  useEffect(() => {
+    function check() {
+      setIsNarrow(window.innerWidth < breakpoint);
+    }
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, [breakpoint]);
+
+  return isNarrow;
+}
+
 function RiskGraphCard({ graph }: { graph: RiskGraph }) {
   const merchants = graph.nodes.filter((n) => n.type === "merchant");
   const customer = graph.nodes.find((n) => n.type === "customer");
+  const isNarrow = useIsNarrow();
 
   if (!customer || merchants.length === 0) {
     return null;
   }
-
-  const rowHeight = 90;
-  const height = Math.max(180, merchants.length * rowHeight + 40);
-  const customerX = 90;
-  const customerY = height / 2;
-  const merchantX = 460;
-
-  const merchantPositions = merchants.map((m, i) => ({
-    node: m,
-    x: merchantX,
-    y: 40 + i * rowHeight + rowHeight / 2,
-  }));
 
   function formatShortDate(iso?: string) {
     if (!iso) return "";
@@ -1260,6 +1264,27 @@ function RiskGraphCard({ graph }: { graph: RiskGraph }) {
       month: "short",
     });
   }
+
+  // Narrow screens: stack top-to-bottom (customer above, merchants
+  // below) so labels have room instead of being squeezed sideways.
+  // Wider screens: original left-to-right layout.
+  const rowSpacing = isNarrow ? 110 : 90;
+  const viewWidth = isNarrow ? 340 : 560;
+  const height = isNarrow
+    ? 110 + merchants.length * rowSpacing + 20
+    : Math.max(180, merchants.length * rowSpacing + 40);
+
+  const customerX = isNarrow ? viewWidth / 2 : 90;
+  const customerY = isNarrow ? 50 : height / 2;
+  const merchantX = isNarrow ? viewWidth / 2 : 460;
+
+  const merchantPositions = merchants.map((m, i) => ({
+    node: m,
+    x: isNarrow ? merchantX : merchantX,
+    y: isNarrow
+      ? 130 + i * rowSpacing
+      : 40 + i * rowSpacing + rowSpacing / 2,
+  }));
 
   return (
     <div className="rounded-2xl border bg-white p-6 shadow-sm">
@@ -1272,9 +1297,9 @@ function RiskGraphCard({ graph }: { graph: RiskGraph }) {
       </p>
 
       <svg
-        viewBox={`0 0 560 ${height}`}
+        viewBox={`0 0 ${viewWidth} ${height}`}
         className="mt-4 w-full"
-        style={{ maxHeight: 320 }}
+        style={{ maxHeight: isNarrow ? 420 : 320 }}
       >
         {graph.edges.map((edge) => {
           const target = merchantPositions.find(
@@ -1284,13 +1309,22 @@ function RiskGraphCard({ graph }: { graph: RiskGraph }) {
 
           const midX = (customerX + target.x) / 2;
           const midY = (customerY + target.y) / 2;
-          // Both lines of text sit on the SAME side of the connecting
-          // line (both above, or both below) with enough gap from the
-          // line itself — putting one above and one below caused the
-          // second line to land almost exactly on the stroke and
-          // disappear visually.
-          const idLabelY = edge.is_current ? midY - 26 : midY + 18;
-          const dateLabelY = edge.is_current ? midY - 13 : midY + 31;
+
+          // Vertical layout: labels sit beside the line (left/right of
+          // center), not above/below it, since the line itself runs
+          // top-to-bottom. Horizontal layout: labels sit above or below.
+          const idLabelX = isNarrow ? midX + 55 : midX;
+          const idLabelY = isNarrow
+            ? midY - 6
+            : edge.is_current
+              ? midY - 26
+              : midY + 18;
+          const dateLabelX = idLabelX;
+          const dateLabelY = isNarrow
+            ? midY + 7
+            : edge.is_current
+              ? midY - 13
+              : midY + 31;
 
           return (
             <g key={edge.dispute_id}>
@@ -1305,10 +1339,10 @@ function RiskGraphCard({ graph }: { graph: RiskGraph }) {
 
               {/* Edge label: dispute ID + date + amount */}
               <text
-                x={midX}
+                x={idLabelX}
                 y={idLabelY}
-                textAnchor="middle"
-                fontSize="10"
+                textAnchor={isNarrow ? "start" : "middle"}
+                fontSize={isNarrow ? "9" : "10"}
                 fontWeight={edge.is_current ? 700 : 600}
                 fill={edge.is_current ? "#4338ca" : "#475569"}
               >
@@ -1316,10 +1350,10 @@ function RiskGraphCard({ graph }: { graph: RiskGraph }) {
                 {edge.is_current ? " (current)" : ""}
               </text>
               <text
-                x={midX}
+                x={dateLabelX}
                 y={dateLabelY}
-                textAnchor="middle"
-                fontSize="9"
+                textAnchor={isNarrow ? "start" : "middle"}
+                fontSize={isNarrow ? "8" : "9"}
                 fontWeight="500"
                 fill={edge.is_current ? "#6366f1" : "#64748b"}
               >
@@ -1355,8 +1389,9 @@ function RiskGraphCard({ graph }: { graph: RiskGraph }) {
                 fill={isCurrentTarget ? "#4f46e5" : "#818cf8"}
               />
               <text
-                x={x + 32}
-                y={y + 4}
+                x={isNarrow ? x : x + 32}
+                y={isNarrow ? y + 34 : y + 4}
+                textAnchor={isNarrow ? "middle" : "start"}
                 fontSize="11"
                 fontWeight="600"
                 fill="#334155"
