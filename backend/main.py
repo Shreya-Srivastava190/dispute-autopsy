@@ -12,6 +12,7 @@ from courier_risk import build_courier_risk, build_courier_breakdown
 from triage import build_triage_queue, get_urgency
 from merchant_spike import build_merchant_spike, build_merchant_spike_summary
 from risk_graph import build_risk_graph
+from evaluate import run_evaluation
 import simulation
 
 
@@ -164,6 +165,20 @@ def triage():
         d["dispute_id"]: build_evidence_analysis(d) for d in disputes
     }
     return {"queue": build_triage_queue(disputes, analyses)}
+
+
+@app.get("/evaluation")
+def evaluation():
+    """
+    Runs the evidence-scoring engine against a held-out synthetic test
+    set (see eval_data.py) and returns precision/recall/F1 per class,
+    a confusion matrix, and false-positive/false-negative cost in INR.
+
+    This set was never used to design the scoring rules in
+    investigator.py — see eval_data.py's docstring for exactly how
+    ground truth is generated and why it isn't artificially perfect.
+    """
+    return run_evaluation(n=200, seed=42)
 
 
 class SimulateRequest(BaseModel):
