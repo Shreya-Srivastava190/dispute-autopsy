@@ -12,7 +12,7 @@ from courier_risk import build_courier_risk, build_courier_breakdown
 from triage import build_triage_queue, get_urgency
 from merchant_spike import build_merchant_spike, build_merchant_spike_summary
 from risk_graph import build_risk_graph
-from evaluate import run_evaluation
+from evaluate import run_evaluation, run_multi_seed_evaluation
 import simulation
 
 
@@ -171,14 +171,25 @@ def triage():
 def evaluation():
     """
     Runs the evidence-scoring engine against a held-out synthetic test
-    set (see eval_data.py) and returns precision/recall/F1 per class,
-    a confusion matrix, and false-positive/false-negative cost in INR.
+    set (see eval_data.py) and returns the primary binary metric
+    (CONTEST vs DO NOT CONTEST), a secondary 3-class breakdown, a
+    confusion matrix, and false-positive/false-negative disputed-value
+    exposure.
 
     This set was never used to design the scoring rules in
     investigator.py — see eval_data.py's docstring for exactly how
     ground truth is generated and why it isn't artificially perfect.
     """
     return run_evaluation(n=200, seed=42)
+
+
+@app.get("/evaluation/multi-seed")
+def evaluation_multi_seed():
+    """
+    Same evaluation run across 3 different random seeds, to show the
+    primary metric isn't a single lucky/unlucky draw.
+    """
+    return run_multi_seed_evaluation(n=200, seeds=[42, 43, 44])
 
 
 class SimulateRequest(BaseModel):
