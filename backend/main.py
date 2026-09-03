@@ -1,7 +1,7 @@
 import json
 import os
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -13,6 +13,7 @@ from triage import build_triage_queue, get_urgency
 from merchant_spike import build_merchant_spike, build_merchant_spike_summary
 from risk_graph import build_risk_graph
 from evaluate import run_evaluation, run_multi_seed_evaluation
+from razorpay_webhook import verify_razorpay_signature, map_razorpay_dispute_to_internal
 import simulation
 
 
@@ -33,6 +34,28 @@ app.add_middleware(
 def load_disputes():
     with open("data/disputes.json", "r") as file:
         return json.load(file)
+
+
+def require_demo_api_key(request: Request) -> Response | None:
+    """
+    Optional write-endpoint guard. If DEMO_API_KEY isn't set on the
+    server, this is a no-op (default local/dev behavior — nothing
+    changes). If it IS set, requests to guarded endpoints must send a
+    matching X-Demo-Api-Key header, or get rejected. Opt-in, so this
+    never silently breaks the demo unless you deliberately lock it down.
+    """
+    expected = os.getenv("DEMO_API_KEY")
+    if not expected:
+        return None
+
+    provided = request.headers.get("X-Demo-Api-Key", "")
+    if provided != expected:
+        return Response(
+            content=json.dumps({"error": "Missing or invalid X-Demo-Api-Key header."}),
+            status_code=401,
+            media_type="application/json",
+        )
+    return None
 
 
 def get_dispute_by_id(dispute_id: str):
@@ -200,12 +223,16 @@ class SimulateRequest(BaseModel):
 
 
 @app.post("/simulate")
-def simulate_dispute(body: SimulateRequest):
+def simulate_dispute(body: SimulateRequest, request: Request):
     """
     Demo sandbox: create a synthetic dispute and see how it changes the
     network risk picture in real time, combined with real seed data.
     Never writes to disputes.json — resets whenever the server restarts.
     """
+    denied = require_demo_api_key(request)
+    if denied:
+        return denied
+
     real_disputes = load_disputes()
     return simulation.add_simulated_dispute(
         customer_id=body.customer_id,
@@ -223,9 +250,74 @@ def get_simulation():
 
 
 @app.post("/simulate/reset")
-def reset_simulation():
+def reset_simulation(request: Request):
+    denied = require_demo_api_key(request)
+    if denied:
+        return denied
+
     simulation.reset_simulation()
     return {"message": "Simulation reset."}
+
+
+@app.post("/webhook/razorpay")
+async def razorpay_webhook(request: Request):
+    """
+    Real Razorpay webhook receiver for the payment.dispute.created event.
+
+    Verifies the request against Razorpay's actual documented signature
+    scheme (HMAC-SHA256 over the raw body, X-Razorpay-Signature header)
+    before touching the payload — an unsigned or wrongly-signed request
+    is rejected outright, not just logged.
+
+    Requires RAZORPAY_WEBHOOK_SECRET to be set. Without it, this
+    endpoint refuses everything rather than silently skipping
+    verification — a webhook receiver that "works" without a secret
+    configured is a receiver that accepts anything from anyone.
+    """
+    secret = os.getenv("RAZORPAY_WEBHOOK_SECRET")
+    if not secret:
+        return Response(
+            content=json.dumps({
+                "error": "RAZORPAY_WEBHOOK_SECRET is not configured on this server."
+            }),
+            status_code=500,
+            media_type="application/json",
+        )
+
+    raw_body = await request.body()
+    signature = request.headers.get("X-Razorpay-Signature", "")
+
+    if not verify_razorpay_signature(raw_body, signature, secret):
+        return Response(
+            content=json.dumps({"error": "Invalid webhook signature."}),
+            status_code=400,
+            media_type="application/json",
+        )
+
+    body = json.loads(raw_body)
+
+    if body.get("event") != "payment.dispute.created":
+        # Acknowledge other subscribed events without processing them,
+        # so Razorpay doesn't treat this as a failed delivery and retry.
+        return {"status": "ignored", "event": body.get("event")}
+
+    dispute = map_razorpay_dispute_to_internal(body)
+    analysis = build_evidence_analysis(dispute)
+    ai_report = generate_ai_report(dispute, analysis)
+
+    return {
+        "status": "processed",
+        "dispute_id": dispute["dispute_id"],
+        "evidence_score": analysis["evidence_score"],
+        "recommendation": analysis["recommendation"],
+        "note": (
+            "Delivery/fulfillment fields are marked 'unconfirmed' — "
+            "Razorpay's dispute webhook doesn't include them; a real "
+            "integration would correlate this with the merchant's own "
+            "order management system to complete the evidence picture."
+        ),
+        "ai_report": ai_report,
+    }
 
 
 @app.get("/dispute/{dispute_id}")
