@@ -1301,75 +1301,117 @@ function RiskGraphCard({ graph }: { graph: RiskGraph }) {
         className="mt-4 w-full"
         style={{ maxHeight: isNarrow ? 420 : 320 }}
       >
-        {graph.edges.map((edge) => {
-          const target = merchantPositions.find(
-            (m) => m.node.id === edge.target
-          );
-          if (!target) return null;
+        {(() => {
+          // Group edges by their target merchant. When a customer has
+          // MULTIPLE disputes with the SAME merchant (e.g. disp_001 and
+          // disp_004 both against merch_501), those edges previously
+          // resolved to the exact same line and label position and
+          // rendered on top of each other, illegible. Each edge in a
+          // group now gets a small perpendicular offset — proportional
+          // to its position within the group — so same-merchant edges
+          // fan out into parallel, readable lines instead of stacking.
+          const edgesByTarget = new Map<string, typeof graph.edges>();
+          for (const edge of graph.edges) {
+            const list = edgesByTarget.get(edge.target) ?? [];
+            list.push(edge);
+            edgesByTarget.set(edge.target, list);
+          }
 
-          // Position along the line closer to the merchant end (62%)
-          // rather than the exact midpoint — with more than one
-          // merchant, midpoints from different edges can land close
-          // together; anchoring nearer each line's own destination
-          // keeps labels from different edges apart.
-          const t = 0.62;
-          const labelBaseX = customerX + t * (target.x - customerX);
-          const labelBaseY = customerY + t * (target.y - customerY);
+          return graph.edges.map((edge) => {
+            const target = merchantPositions.find(
+              (m) => m.node.id === edge.target
+            );
+            if (!target) return null;
 
-          // Offset direction follows THIS line's own slope (whether it
-          // heads up or down from the customer), not is_current — using
-          // is_current for direction was the bug: it made the current
-          // edge's label push one way and the other edge push the
-          // opposite way, and depending on which merchant was "current"
-          // those two directions could coincidentally converge on the
-          // same point instead of naturally separating.
-          const goesUp = target.y < customerY;
-          const idLabelX = isNarrow ? labelBaseX + 55 : labelBaseX;
-          const idLabelY = isNarrow
-            ? labelBaseY - 6
-            : labelBaseY + (goesUp ? -14 : 18);
-          const dateLabelX = idLabelX;
-          const dateLabelY = isNarrow
-            ? labelBaseY + 7
-            : labelBaseY + (goesUp ? -1 : 31);
+            const group = edgesByTarget.get(edge.target) ?? [edge];
+            const indexInGroup = group.findIndex(
+              (e) => e.dispute_id === edge.dispute_id
+            );
+            const groupCount = group.length;
 
-          return (
-            <g key={edge.dispute_id}>
-              <line
-                x1={customerX}
-                y1={customerY}
-                x2={target.x}
-                y2={target.y}
-                stroke={edge.is_current ? "#4f46e5" : "#cbd5e1"}
-                strokeWidth={edge.is_current ? 2.5 : 1.5}
-              />
+            // Perpendicular unit vector to this line's own direction,
+            // used to fan out same-target edges instead of overlapping.
+            const dx = target.x - customerX;
+            const dy = target.y - customerY;
+            const len = Math.sqrt(dx * dx + dy * dy) || 1;
+            const perpX = -dy / len;
+            const perpY = dx / len;
 
-              {/* Edge label: dispute ID + date + amount */}
-              <text
-                x={idLabelX}
-                y={idLabelY}
-                textAnchor={isNarrow ? "start" : "middle"}
-                fontSize={isNarrow ? "9" : "10"}
-                fontWeight={edge.is_current ? 700 : 600}
-                fill={edge.is_current ? "#4338ca" : "#475569"}
-              >
-                {edge.dispute_id}
-                {edge.is_current ? " (current)" : ""}
-              </text>
-              <text
-                x={dateLabelX}
-                y={dateLabelY}
-                textAnchor={isNarrow ? "start" : "middle"}
-                fontSize={isNarrow ? "8" : "9"}
-                fontWeight="500"
-                fill={edge.is_current ? "#6366f1" : "#64748b"}
-              >
-                {formatShortDate(edge.filed_at)}
-                {edge.amount ? ` · ₹${edge.amount.toLocaleString("en-IN")}` : ""}
-              </text>
-            </g>
-          );
-        })}
+            const OFFSET = isNarrow ? 10 : 16;
+            const offset =
+              groupCount > 1
+                ? (indexInGroup - (groupCount - 1) / 2) * OFFSET
+                : 0;
+
+            const x1 = customerX + perpX * offset;
+            const y1 = customerY + perpY * offset;
+            const x2 = target.x + perpX * offset;
+            const y2 = target.y + perpY * offset;
+
+            // Position along the line closer to the merchant end (62%)
+            // rather than the exact midpoint — with more than one
+            // merchant, midpoints from different edges can land close
+            // together; anchoring nearer each line's own destination
+            // keeps labels from different edges apart.
+            const t = 0.62;
+            const labelBaseX = x1 + t * (x2 - x1);
+            const labelBaseY = y1 + t * (y2 - y1);
+
+            // Offset direction follows THIS line's own slope (whether it
+            // heads up or down from the customer), not is_current — using
+            // is_current for direction was the bug: it made the current
+            // edge's label push one way and the other edge push the
+            // opposite way, and depending on which merchant was "current"
+            // those two directions could coincidentally converge on the
+            // same point instead of naturally separating.
+            const goesUp = y2 < y1;
+            const idLabelX = isNarrow ? labelBaseX + 55 : labelBaseX;
+            const idLabelY = isNarrow
+              ? labelBaseY - 6
+              : labelBaseY + (goesUp ? -14 : 18);
+            const dateLabelX = idLabelX;
+            const dateLabelY = isNarrow
+              ? labelBaseY + 7
+              : labelBaseY + (goesUp ? -1 : 31);
+
+            return (
+              <g key={edge.dispute_id}>
+                <line
+                  x1={x1}
+                  y1={y1}
+                  x2={x2}
+                  y2={y2}
+                  stroke={edge.is_current ? "#4f46e5" : "#cbd5e1"}
+                  strokeWidth={edge.is_current ? 2.5 : 1.5}
+                />
+
+                {/* Edge label: dispute ID + date + amount */}
+                <text
+                  x={idLabelX}
+                  y={idLabelY}
+                  textAnchor={isNarrow ? "start" : "middle"}
+                  fontSize={isNarrow ? "9" : "10"}
+                  fontWeight={edge.is_current ? 700 : 600}
+                  fill={edge.is_current ? "#4338ca" : "#475569"}
+                >
+                  {edge.dispute_id}
+                  {edge.is_current ? " (current)" : ""}
+                </text>
+                <text
+                  x={dateLabelX}
+                  y={dateLabelY}
+                  textAnchor={isNarrow ? "start" : "middle"}
+                  fontSize={isNarrow ? "8" : "9"}
+                  fontWeight="500"
+                  fill={edge.is_current ? "#6366f1" : "#64748b"}
+                >
+                  {formatShortDate(edge.filed_at)}
+                  {edge.amount ? ` · ₹${edge.amount.toLocaleString("en-IN")}` : ""}
+                </text>
+              </g>
+            );
+          });
+        })()}
 
         <circle cx={customerX} cy={customerY} r={22} fill="#1e293b" />
         <text
