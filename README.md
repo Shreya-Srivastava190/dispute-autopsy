@@ -48,7 +48,7 @@ accuracy; see Limitations below.
   touches real seed data, resets on server restart
 - **Evaluation harness** (`evaluate.py`, `eval_data.py`) — measured
   precision/recall/F1 on a held-out synthetic test set, see
-  `EVALUATION.md`
+  `Evaluation.md`
 - **Real Razorpay webhook receiver** (`razorpay_webhook.py`) — see
   "Razorpay Integration" below
 
@@ -133,7 +133,7 @@ print('X-Razorpay-Signature:', sig)
 ## Evaluation
 
 Per a "measured precision and recall on a held-out test set"
-requirement: `EVALUATION.md` documents the full methodology and
+requirement: `Evaluation.md` documents the full methodology and
 results, including a genuine before/after threshold recalibration with
 disclosed trade-offs. Run `python backend/evaluate.py` to reproduce it
 yourself, or hit `GET /evaluation` / `GET /evaluation/multi-seed` on
@@ -150,7 +150,7 @@ comments:
   claim about real-world accuracy.
 - **Rule-based core, by design.** The scoring engine is deterministic
   and auditable rather than a trained model — a decision made for
-  explainability, not a limitation of time. See `EVALUATION.md` for
+  explainability, not a limitation of time. See `Evaluation.md` for
   why an opaque model wasn't the right trade here.
 - **Small seed dataset, though larger than a single hand-written
   example.** `data/generate_seed_disputes.py` builds 25 disputes with

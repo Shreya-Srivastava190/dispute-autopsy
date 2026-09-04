@@ -1,55 +1,301 @@
 {
-  "n": 200,
-  "seed": 42,
-  "accuracy": 0.68,
-  "confusion_matrix": {
-    "CONTEST": {
-      "CONTEST": 95,
-      "REVIEW": 3,
-      "ACCEPT": 6
+  "single_seed": {
+    "n": 200,
+    "seed": 42,
+    "primary_metric": {
+      "description": "CONTEST vs DO NOT CONTEST (REVIEW + ACCEPT collapsed)",
+      "precision": 0.69,
+      "recall": 0.897,
+      "f1": 0.78,
+      "true_positives": 78,
+      "false_positives": 35,
+      "false_negatives": 9,
+      "true_negatives": 78
     },
-    "REVIEW": {
-      "CONTEST": 1,
-      "REVIEW": 10,
-      "ACCEPT": 1
+    "secondary_3class_accuracy": 0.62,
+    "confusion_matrix": {
+      "CONTEST": {
+        "CONTEST": 78,
+        "REVIEW": 27,
+        "ACCEPT": 8
+      },
+      "REVIEW": {
+        "CONTEST": 6,
+        "REVIEW": 28,
+        "ACCEPT": 30
+      },
+      "ACCEPT": {
+        "CONTEST": 3,
+        "REVIEW": 2,
+        "ACCEPT": 18
+      }
     },
-    "ACCEPT": {
-      "CONTEST": 9,
-      "REVIEW": 44,
-      "ACCEPT": 31
+    "per_class_metrics": {
+      "CONTEST": {
+        "precision": 0.69,
+        "recall": 0.897,
+        "f1": 0.78,
+        "true_positives": 78,
+        "false_positives": 35,
+        "false_negatives": 9
+      },
+      "REVIEW": {
+        "precision": 0.438,
+        "recall": 0.491,
+        "f1": 0.463,
+        "true_positives": 28,
+        "false_positives": 36,
+        "false_negatives": 29
+      },
+      "ACCEPT": {
+        "precision": 0.783,
+        "recall": 0.321,
+        "f1": 0.456,
+        "true_positives": 18,
+        "false_positives": 5,
+        "false_negatives": 38
+      }
+    },
+    "ground_truth_distribution": {
+      "REVIEW": 57,
+      "CONTEST": 87,
+      "ACCEPT": 56
+    },
+    "false_positive_disputed_value_exposure_inr": 640300,
+    "false_positive_case_count": 35,
+    "false_negative_disputed_value_exposure_inr": 46500,
+    "false_negative_case_count": 3,
+    "exposure_disclaimer": "These are disputed-value exposure proxies on synthetic ground truth, not measured real-world financial loss."
+  },
+  "multi_seed": {
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "n_per_seed": 200,
+    "runs": [
+      {
+        "n": 200,
+        "seed": 42,
+        "primary_metric": {
+          "description": "CONTEST vs DO NOT CONTEST (REVIEW + ACCEPT collapsed)",
+          "precision": 0.69,
+          "recall": 0.897,
+          "f1": 0.78,
+          "true_positives": 78,
+          "false_positives": 35,
+          "false_negatives": 9,
+          "true_negatives": 78
+        },
+        "secondary_3class_accuracy": 0.62,
+        "confusion_matrix": {
+          "CONTEST": {
+            "CONTEST": 78,
+            "REVIEW": 27,
+            "ACCEPT": 8
+          },
+          "REVIEW": {
+            "CONTEST": 6,
+            "REVIEW": 28,
+            "ACCEPT": 30
+          },
+          "ACCEPT": {
+            "CONTEST": 3,
+            "REVIEW": 2,
+            "ACCEPT": 18
+          }
+        },
+        "per_class_metrics": {
+          "CONTEST": {
+            "precision": 0.69,
+            "recall": 0.897,
+            "f1": 0.78,
+            "true_positives": 78,
+            "false_positives": 35,
+            "false_negatives": 9
+          },
+          "REVIEW": {
+            "precision": 0.438,
+            "recall": 0.491,
+            "f1": 0.463,
+            "true_positives": 28,
+            "false_positives": 36,
+            "false_negatives": 29
+          },
+          "ACCEPT": {
+            "precision": 0.783,
+            "recall": 0.321,
+            "f1": 0.456,
+            "true_positives": 18,
+            "false_positives": 5,
+            "false_negatives": 38
+          }
+        },
+        "ground_truth_distribution": {
+          "REVIEW": 57,
+          "CONTEST": 87,
+          "ACCEPT": 56
+        },
+        "false_positive_disputed_value_exposure_inr": 640300,
+        "false_positive_case_count": 35,
+        "false_negative_disputed_value_exposure_inr": 46500,
+        "false_negative_case_count": 3,
+        "exposure_disclaimer": "These are disputed-value exposure proxies on synthetic ground truth, not measured real-world financial loss."
+      },
+      {
+        "n": 200,
+        "seed": 43,
+        "primary_metric": {
+          "description": "CONTEST vs DO NOT CONTEST (REVIEW + ACCEPT collapsed)",
+          "precision": 0.694,
+          "recall": 0.855,
+          "f1": 0.766,
+          "true_positives": 59,
+          "false_positives": 26,
+          "false_negatives": 10,
+          "true_negatives": 105
+        },
+        "secondary_3class_accuracy": 0.6,
+        "confusion_matrix": {
+          "CONTEST": {
+            "CONTEST": 59,
+            "REVIEW": 22,
+            "ACCEPT": 4
+          },
+          "REVIEW": {
+            "CONTEST": 10,
+            "REVIEW": 37,
+            "ACCEPT": 43
+          },
+          "ACCEPT": {
+            "CONTEST": 0,
+            "REVIEW": 1,
+            "ACCEPT": 24
+          }
+        },
+        "per_class_metrics": {
+          "CONTEST": {
+            "precision": 0.694,
+            "recall": 0.855,
+            "f1": 0.766,
+            "true_positives": 59,
+            "false_positives": 26,
+            "false_negatives": 10
+          },
+          "REVIEW": {
+            "precision": 0.411,
+            "recall": 0.617,
+            "f1": 0.493,
+            "true_positives": 37,
+            "false_positives": 53,
+            "false_negatives": 23
+          },
+          "ACCEPT": {
+            "precision": 0.96,
+            "recall": 0.338,
+            "f1": 0.5,
+            "true_positives": 24,
+            "false_positives": 1,
+            "false_negatives": 47
+          }
+        },
+        "ground_truth_distribution": {
+          "REVIEW": 60,
+          "CONTEST": 69,
+          "ACCEPT": 71
+        },
+        "false_positive_disputed_value_exposure_inr": 498100,
+        "false_positive_case_count": 26,
+        "false_negative_disputed_value_exposure_inr": 0,
+        "false_negative_case_count": 0,
+        "exposure_disclaimer": "These are disputed-value exposure proxies on synthetic ground truth, not measured real-world financial loss."
+      },
+      {
+        "n": 200,
+        "seed": 44,
+        "primary_metric": {
+          "description": "CONTEST vs DO NOT CONTEST (REVIEW + ACCEPT collapsed)",
+          "precision": 0.674,
+          "recall": 0.831,
+          "f1": 0.744,
+          "true_positives": 64,
+          "false_positives": 31,
+          "false_negatives": 13,
+          "true_negatives": 92
+        },
+        "secondary_3class_accuracy": 0.62,
+        "confusion_matrix": {
+          "CONTEST": {
+            "CONTEST": 64,
+            "REVIEW": 23,
+            "ACCEPT": 8
+          },
+          "REVIEW": {
+            "CONTEST": 12,
+            "REVIEW": 40,
+            "ACCEPT": 29
+          },
+          "ACCEPT": {
+            "CONTEST": 1,
+            "REVIEW": 3,
+            "ACCEPT": 20
+          }
+        },
+        "per_class_metrics": {
+          "CONTEST": {
+            "precision": 0.674,
+            "recall": 0.831,
+            "f1": 0.744,
+            "true_positives": 64,
+            "false_positives": 31,
+            "false_negatives": 13
+          },
+          "REVIEW": {
+            "precision": 0.494,
+            "recall": 0.606,
+            "f1": 0.544,
+            "true_positives": 40,
+            "false_positives": 41,
+            "false_negatives": 26
+          },
+          "ACCEPT": {
+            "precision": 0.833,
+            "recall": 0.351,
+            "f1": 0.494,
+            "true_positives": 20,
+            "false_positives": 4,
+            "false_negatives": 37
+          }
+        },
+        "ground_truth_distribution": {
+          "REVIEW": 66,
+          "CONTEST": 77,
+          "ACCEPT": 57
+        },
+        "false_positive_disputed_value_exposure_inr": 584200,
+        "false_positive_case_count": 31,
+        "false_negative_disputed_value_exposure_inr": 6500,
+        "false_negative_case_count": 1,
+        "exposure_disclaimer": "These are disputed-value exposure proxies on synthetic ground truth, not measured real-world financial loss."
+      }
+    ],
+    "primary_metric_summary": {
+      "precision_mean": 0.686,
+      "precision_range": [
+        0.674,
+        0.694
+      ],
+      "recall_mean": 0.861,
+      "recall_range": [
+        0.831,
+        0.897
+      ],
+      "f1_mean": 0.763,
+      "f1_range": [
+        0.744,
+        0.78
+      ]
     }
-  },
-  "per_class_metrics": {
-    "CONTEST": {
-      "precision": 0.913,
-      "recall": 0.905,
-      "f1": 0.909,
-      "true_positives": 95,
-      "false_positives": 9,
-      "false_negatives": 10
-    },
-    "REVIEW": {
-      "precision": 0.833,
-      "recall": 0.175,
-      "f1": 0.29,
-      "true_positives": 10,
-      "false_positives": 2,
-      "false_negatives": 47
-    },
-    "ACCEPT": {
-      "precision": 0.369,
-      "recall": 0.816,
-      "f1": 0.508,
-      "true_positives": 31,
-      "false_positives": 53,
-      "false_negatives": 7
-    }
-  },
-  "ground_truth_distribution": {
-    "ACCEPT": 38,
-    "CONTEST": 105,
-    "REVIEW": 57
-  },
-  "false_positive_cost_inr": 214200,
-  "false_negative_cost_inr": 152500
+  }
 }
