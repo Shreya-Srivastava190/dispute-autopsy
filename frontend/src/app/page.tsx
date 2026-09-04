@@ -1337,16 +1337,27 @@ function RiskGraphCard({ graph }: { graph: RiskGraph }) {
             const perpX = -dy / len;
             const perpY = dx / len;
 
-            const OFFSET = isNarrow ? 10 : 16;
+            const OFFSET = isNarrow ? 30 : 48;
             const offset =
               groupCount > 1
                 ? (indexInGroup - (groupCount - 1) / 2) * OFFSET
                 : 0;
 
-            const x1 = customerX + perpX * offset;
-            const y1 = customerY + perpY * offset;
-            const x2 = target.x + perpX * offset;
-            const y2 = target.y + perpY * offset;
+            // Lines stay anchored exactly to the customer and merchant
+            // circle centers — only the LABEL position is offset, not
+            // the line itself. Offsetting the line geometry too (an
+            // earlier version of this fix did that) pulled the line's
+            // start point away from the circle it's supposed to touch,
+            // which looked disconnected once the offset was large
+            // enough to actually separate two-line label blocks.
+            const x1 = customerX;
+            const y1 = customerY;
+            const x2 = target.x;
+            const y2 = target.y;
+            const labelX1 = x1 + perpX * offset;
+            const labelY1 = y1 + perpY * offset;
+            const labelX2 = x2 + perpX * offset;
+            const labelY2 = y2 + perpY * offset;
 
             // Position along the line closer to the merchant end (62%)
             // rather than the exact midpoint — with more than one
@@ -1354,8 +1365,8 @@ function RiskGraphCard({ graph }: { graph: RiskGraph }) {
             // together; anchoring nearer each line's own destination
             // keeps labels from different edges apart.
             const t = 0.62;
-            const labelBaseX = x1 + t * (x2 - x1);
-            const labelBaseY = y1 + t * (y2 - y1);
+            const labelBaseX = labelX1 + t * (labelX2 - labelX1);
+            const labelBaseY = labelY1 + t * (labelY2 - labelY1);
 
             // Offset direction follows THIS line's own slope (whether it
             // heads up or down from the customer), not is_current — using
