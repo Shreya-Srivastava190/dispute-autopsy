@@ -11,9 +11,10 @@ signals (cross-merchant pattern detection, courier fulfillment
 anomalies, merchant dispute spikes) surface patterns a single
 merchant's own dashboard structurally cannot see, since a single
 merchant only ever sees their own transactions. Note: this is
-demonstrated at small scale (a handful of seed disputes, low flagging
-thresholds) — it's a proof of the pattern-detection architecture, not
-a claim about production-scale accuracy; see Limitations below.
+demonstrated at small scale (25 seed disputes with deliberately planted
+patterns, low flagging thresholds) — it's a proof of the
+pattern-detection architecture, not a claim about production-scale
+accuracy; see Limitations below.
 
 ## Features
 
@@ -37,6 +38,11 @@ a claim about production-scale accuracy; see Limitations below.
 - **Triage / Action Queue** (`triage.py`) — priority-sorted queue by
   amount × deadline urgency × evidence gap (a documented demo
   heuristic, not a calibrated model)
+- **Seed dataset generator** (`data/generate_seed_disputes.py`) — 25
+  reproducible demo disputes with deliberately planted, labeled
+  patterns (cross-merchant serial disputer, merchant spike, courier
+  concentration) so the platform-intelligence views have something
+  real to show. Re-run with `python data/generate_seed_disputes.py`.
 - **Scenario Lab** (`simulation.py`) — an in-memory sandbox to add a
   synthetic dispute and watch the risk signals update live; never
   touches real seed data, resets on server restart
@@ -146,9 +152,15 @@ comments:
   and auditable rather than a trained model — a decision made for
   explainability, not a limitation of time. See `EVALUATION.md` for
   why an opaque model wasn't the right trade here.
-- **Small seed dataset.** The demo's flagging thresholds (e.g. "2
-  disputes" triggers a network-risk flag) are intentionally low to be
-  demonstrable over a handful of seed records. A production version
+- **Small seed dataset, though larger than a single hand-written
+  example.** `data/generate_seed_disputes.py` builds 25 disputes with
+  deliberately planted patterns (a cross-merchant serial disputer, a
+  4-dispute merchant spike, a courier flagged across 11 disputes and
+  multiple merchants) so the Dashboard/Triage/network-risk views have
+  enough volume to demonstrate the architecture. The flagging
+  thresholds (e.g. "2 disputes" triggers a network-risk flag) are
+  still intentionally low relative to real platform volume. A
+  production version
   processing real volume would need thresholds calibrated against
   actual base rates, not fixed small integers.
 - **No production security hardening.** CORS defaults to an open

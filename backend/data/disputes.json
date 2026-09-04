@@ -7,21 +7,21 @@
     "customer_id": "cust_101",
     "merchant_id": "merch_501",
     "payment": {
-      "payment_id": "pay_001",
+      "payment_id": "pay_disp_001",
       "status": "captured",
       "amount": 25000,
-      "date": "2026-08-10T10:31:00"
+      "date": "2026-08-12T12:00:00"
     },
     "order": {
-      "order_id": "ORD_123",
+      "order_id": "ORD_DISP_001",
       "product": "iPhone 15",
       "amount": 25000,
       "status": "fulfilled",
-      "shipping_address": "Ahmedabad, Gujarat"
+      "shipping_address": "Synthetic seed address"
     },
     "delivery": {
       "status": "delivered",
-      "delivered_at": "2026-08-13T15:42:00",
+      "delivered_at": "2026-08-13T12:00:00",
       "address_match": true,
       "signature_available": true,
       "courier": "BlueDart"
@@ -34,8 +34,8 @@
       "merchant_response": true,
       "conversation": "Customer claimed the item was not received. Merchant provided delivery confirmation."
     },
-    "filed_at": "2026-08-15T09:00:00",
-    "response_deadline": "2026-08-28T20:00:00"
+    "filed_at": "2026-08-15T12:00:00",
+    "response_deadline": "2026-08-29T12:00:00"
   },
   {
     "dispute_id": "disp_002",
@@ -45,17 +45,17 @@
     "customer_id": "cust_102",
     "merchant_id": "merch_502",
     "payment": {
-      "payment_id": "pay_002",
+      "payment_id": "pay_disp_002",
       "status": "captured",
       "amount": 8500,
-      "date": "2026-08-12T09:10:00"
+      "date": "2026-08-14T12:00:00"
     },
     "order": {
-      "order_id": "ORD_124",
+      "order_id": "ORD_DISP_002",
       "product": "Bluetooth Speaker",
       "amount": 8500,
       "status": "fulfilled",
-      "shipping_address": "Pune, Maharashtra"
+      "shipping_address": "Synthetic seed address"
     },
     "delivery": {
       "status": "not_delivered",
@@ -69,11 +69,11 @@
     },
     "support": {
       "customer_contacted": true,
-      "merchant_response": false,
-      "conversation": "Customer says the package never arrived. Merchant has not responded yet."
+      "merchant_response": true,
+      "conversation": "Customer claimed the item was not received. No delivery confirmation on file."
     },
-    "filed_at": "2026-08-19T10:30:00",
-    "response_deadline": "2026-09-05T10:30:00"
+    "filed_at": "2026-08-17T12:00:00",
+    "response_deadline": "2026-09-02T12:00:00"
   },
   {
     "dispute_id": "disp_003",
@@ -83,23 +83,23 @@
     "customer_id": "cust_103",
     "merchant_id": "merch_503",
     "payment": {
-      "payment_id": "pay_003",
+      "payment_id": "pay_disp_003",
       "status": "captured",
       "amount": 14200,
-      "date": "2026-08-14T18:22:00"
+      "date": "2026-08-16T12:00:00"
     },
     "order": {
-      "order_id": "ORD_125",
-      "product": "Air Fryer",
+      "order_id": "ORD_DISP_003",
+      "product": "Running Shoes",
       "amount": 14200,
       "status": "fulfilled",
-      "shipping_address": "Bengaluru, Karnataka"
+      "shipping_address": "Synthetic seed address"
     },
     "delivery": {
       "status": "delivered",
-      "delivered_at": "2026-08-17T12:05:00",
+      "delivered_at": "2026-08-17T12:00:00",
       "address_match": true,
-      "signature_available": false,
+      "signature_available": true,
       "courier": "BlueDart"
     },
     "refund": {
@@ -108,10 +108,10 @@
     "support": {
       "customer_contacted": true,
       "merchant_response": true,
-      "conversation": "Delivery marked complete but no signature was captured. Customer maintains they never received it."
+      "conversation": "Customer claimed the item was not received. Merchant provided delivery confirmation."
     },
-    "filed_at": "2026-08-19T14:00:00",
-    "response_deadline": "2026-08-30T14:00:00"
+    "filed_at": "2026-08-19T12:00:00",
+    "response_deadline": "2026-09-05T12:00:00"
   },
   {
     "dispute_id": "disp_004",
@@ -121,21 +121,21 @@
     "customer_id": "cust_101",
     "merchant_id": "merch_501",
     "payment": {
-      "payment_id": "pay_004",
+      "payment_id": "pay_disp_004",
       "status": "captured",
       "amount": 32000,
-      "date": "2026-08-05T11:00:00"
+      "date": "2026-08-18T12:00:00"
     },
     "order": {
-      "order_id": "ORD_126",
-      "product": "Office Chair",
+      "order_id": "ORD_DISP_004",
+      "product": "MacBook Sleeve",
       "amount": 32000,
       "status": "fulfilled",
-      "shipping_address": "Ahmedabad, Gujarat"
+      "shipping_address": "Synthetic seed address"
     },
     "delivery": {
       "status": "delivered",
-      "delivered_at": "2026-08-09T14:30:00",
+      "delivered_at": "2026-08-19T12:00:00",
       "address_match": true,
       "signature_available": true,
       "courier": "BlueDart"
@@ -146,10 +146,10 @@
     "support": {
       "customer_contacted": true,
       "merchant_response": true,
-      "conversation": "A refund was already issued for this order before the dispute was filed."
+      "conversation": "Customer claimed the item was not received. Merchant provided delivery confirmation."
     },
-    "filed_at": "2026-08-11T08:15:00",
-    "response_deadline": "2026-09-10T08:15:00"
+    "filed_at": "2026-08-21T12:00:00",
+    "response_deadline": "2026-09-06T12:00:00"
   },
   {
     "dispute_id": "disp_005",
@@ -159,17 +159,17 @@
     "customer_id": "cust_104",
     "merchant_id": "merch_502",
     "payment": {
-      "payment_id": "pay_005",
+      "payment_id": "pay_disp_005",
       "status": "captured",
       "amount": 11000,
-      "date": "2026-08-18T13:15:00"
+      "date": "2026-08-20T12:00:00"
     },
     "order": {
-      "order_id": "ORD_127",
-      "product": "Wireless Earbuds",
+      "order_id": "ORD_DISP_005",
+      "product": "Desk Lamp",
       "amount": 11000,
       "status": "fulfilled",
-      "shipping_address": "Nagpur, Maharashtra"
+      "shipping_address": "Synthetic seed address"
     },
     "delivery": {
       "status": "not_delivered",
@@ -183,11 +183,11 @@
     },
     "support": {
       "customer_contacted": true,
-      "merchant_response": false,
-      "conversation": "Second unresolved delivery complaint against this merchant this month."
+      "merchant_response": true,
+      "conversation": "Customer claimed the item was not received. No delivery confirmation on file."
     },
-    "filed_at": "2026-08-21T11:45:00",
-    "response_deadline": "2026-08-29T11:45:00"
+    "filed_at": "2026-08-23T12:00:00",
+    "response_deadline": "2026-09-08T12:00:00"
   },
   {
     "dispute_id": "disp_006",
@@ -197,22 +197,668 @@
     "customer_id": "cust_103",
     "merchant_id": "merch_504",
     "payment": {
-      "payment_id": "pay_006",
+      "payment_id": "pay_disp_006",
       "status": "captured",
       "amount": 6200,
-      "date": "2026-08-20T16:40:00"
+      "date": "2026-08-22T12:00:00"
     },
     "order": {
-      "order_id": "ORD_128",
-      "product": "Table Lamp",
+      "order_id": "ORD_DISP_006",
+      "product": "Yoga Mat",
       "amount": 6200,
       "status": "fulfilled",
-      "shipping_address": "Bengaluru, Karnataka"
+      "shipping_address": "Synthetic seed address"
     },
     "delivery": {
       "status": "delivered",
-      "delivered_at": "2026-08-22T11:20:00",
+      "delivered_at": "2026-08-23T12:00:00",
       "address_match": true,
+      "signature_available": true,
+      "courier": "Delhivery"
+    },
+    "refund": {
+      "issued": false
+    },
+    "support": {
+      "customer_contacted": true,
+      "merchant_response": true,
+      "conversation": "Customer claimed the item was not received. Merchant provided delivery confirmation."
+    },
+    "filed_at": "2026-08-25T12:00:00",
+    "response_deadline": "2026-09-10T12:00:00"
+  },
+  {
+    "dispute_id": "disp_007",
+    "reason": "ITEM_NOT_RECEIVED",
+    "amount": 9800,
+    "currency": "INR",
+    "customer_id": "cust_101",
+    "merchant_id": "merch_505",
+    "payment": {
+      "payment_id": "pay_disp_007",
+      "status": "captured",
+      "amount": 9800,
+      "date": "2026-08-24T12:00:00"
+    },
+    "order": {
+      "order_id": "ORD_DISP_007",
+      "product": "Wireless Mouse",
+      "amount": 9800,
+      "status": "fulfilled",
+      "shipping_address": "Synthetic seed address"
+    },
+    "delivery": {
+      "status": "not_delivered",
+      "delivered_at": null,
+      "address_match": false,
+      "signature_available": false,
+      "courier": "SpeedEx"
+    },
+    "refund": {
+      "issued": false
+    },
+    "support": {
+      "customer_contacted": true,
+      "merchant_response": true,
+      "conversation": "Customer says this never arrived either \u2014 third merchant this month."
+    },
+    "filed_at": "2026-08-27T12:00:00",
+    "response_deadline": "2026-09-05T12:00:00"
+  },
+  {
+    "dispute_id": "disp_100",
+    "reason": "ITEM_NOT_RECEIVED",
+    "amount": 15000,
+    "currency": "INR",
+    "customer_id": "cust_201",
+    "merchant_id": "merch_506",
+    "payment": {
+      "payment_id": "pay_disp_100",
+      "status": "captured",
+      "amount": 15000,
+      "date": "2026-08-23T12:00:00"
+    },
+    "order": {
+      "order_id": "ORD_DISP_100",
+      "product": "Air Fryer",
+      "amount": 15000,
+      "status": "fulfilled",
+      "shipping_address": "Synthetic seed address"
+    },
+    "delivery": {
+      "status": "not_delivered",
+      "delivered_at": null,
+      "address_match": false,
+      "signature_available": false,
+      "courier": "SpeedEx"
+    },
+    "refund": {
+      "issued": false
+    },
+    "support": {
+      "customer_contacted": true,
+      "merchant_response": true,
+      "conversation": "Multiple customers reporting the same issue with this merchant recently."
+    },
+    "filed_at": "2026-08-26T12:00:00",
+    "response_deadline": "2026-09-06T12:00:00"
+  },
+  {
+    "dispute_id": "disp_101",
+    "reason": "ITEM_NOT_RECEIVED",
+    "amount": 16000,
+    "currency": "INR",
+    "customer_id": "cust_202",
+    "merchant_id": "merch_506",
+    "payment": {
+      "payment_id": "pay_disp_101",
+      "status": "captured",
+      "amount": 16000,
+      "date": "2026-08-24T12:00:00"
+    },
+    "order": {
+      "order_id": "ORD_DISP_101",
+      "product": "Air Fryer",
+      "amount": 16000,
+      "status": "fulfilled",
+      "shipping_address": "Synthetic seed address"
+    },
+    "delivery": {
+      "status": "not_delivered",
+      "delivered_at": null,
+      "address_match": false,
+      "signature_available": false,
+      "courier": "SpeedEx"
+    },
+    "refund": {
+      "issued": false
+    },
+    "support": {
+      "customer_contacted": true,
+      "merchant_response": true,
+      "conversation": "Multiple customers reporting the same issue with this merchant recently."
+    },
+    "filed_at": "2026-08-27T12:00:00",
+    "response_deadline": "2026-09-07T12:00:00"
+  },
+  {
+    "dispute_id": "disp_102",
+    "reason": "ITEM_NOT_RECEIVED",
+    "amount": 17000,
+    "currency": "INR",
+    "customer_id": "cust_203",
+    "merchant_id": "merch_506",
+    "payment": {
+      "payment_id": "pay_disp_102",
+      "status": "captured",
+      "amount": 17000,
+      "date": "2026-08-25T12:00:00"
+    },
+    "order": {
+      "order_id": "ORD_DISP_102",
+      "product": "Air Fryer",
+      "amount": 17000,
+      "status": "fulfilled",
+      "shipping_address": "Synthetic seed address"
+    },
+    "delivery": {
+      "status": "not_delivered",
+      "delivered_at": null,
+      "address_match": false,
+      "signature_available": false,
+      "courier": "SpeedEx"
+    },
+    "refund": {
+      "issued": false
+    },
+    "support": {
+      "customer_contacted": true,
+      "merchant_response": true,
+      "conversation": "Multiple customers reporting the same issue with this merchant recently."
+    },
+    "filed_at": "2026-08-28T12:00:00",
+    "response_deadline": "2026-09-08T12:00:00"
+  },
+  {
+    "dispute_id": "disp_103",
+    "reason": "ITEM_NOT_RECEIVED",
+    "amount": 18000,
+    "currency": "INR",
+    "customer_id": "cust_204",
+    "merchant_id": "merch_506",
+    "payment": {
+      "payment_id": "pay_disp_103",
+      "status": "captured",
+      "amount": 18000,
+      "date": "2026-08-26T12:00:00"
+    },
+    "order": {
+      "order_id": "ORD_DISP_103",
+      "product": "Air Fryer",
+      "amount": 18000,
+      "status": "fulfilled",
+      "shipping_address": "Synthetic seed address"
+    },
+    "delivery": {
+      "status": "not_delivered",
+      "delivered_at": null,
+      "address_match": false,
+      "signature_available": false,
+      "courier": "SpeedEx"
+    },
+    "refund": {
+      "issued": false
+    },
+    "support": {
+      "customer_contacted": true,
+      "merchant_response": true,
+      "conversation": "Multiple customers reporting the same issue with this merchant recently."
+    },
+    "filed_at": "2026-08-29T12:00:00",
+    "response_deadline": "2026-09-09T12:00:00"
+  },
+  {
+    "dispute_id": "disp_110",
+    "reason": "ITEM_NOT_RECEIVED",
+    "amount": 7200,
+    "currency": "INR",
+    "customer_id": "cust_301",
+    "merchant_id": "merch_507",
+    "payment": {
+      "payment_id": "pay_disp_110",
+      "status": "captured",
+      "amount": 7200,
+      "date": "2026-08-26T12:00:00"
+    },
+    "order": {
+      "order_id": "ORD_DISP_110",
+      "product": "Kettle",
+      "amount": 7200,
+      "status": "fulfilled",
+      "shipping_address": "Synthetic seed address"
+    },
+    "delivery": {
+      "status": "not_delivered",
+      "delivered_at": null,
+      "address_match": false,
+      "signature_available": false,
+      "courier": "SpeedEx"
+    },
+    "refund": {
+      "issued": false
+    },
+    "support": {
+      "customer_contacted": true,
+      "merchant_response": true,
+      "conversation": "Customer claimed the item was not received. No delivery confirmation on file."
+    },
+    "filed_at": "2026-08-29T12:00:00",
+    "response_deadline": "2026-09-09T12:00:00"
+  },
+  {
+    "dispute_id": "disp_111",
+    "reason": "ITEM_NOT_RECEIVED",
+    "amount": 21000,
+    "currency": "INR",
+    "customer_id": "cust_302",
+    "merchant_id": "merch_508",
+    "payment": {
+      "payment_id": "pay_disp_111",
+      "status": "captured",
+      "amount": 21000,
+      "date": "2026-08-28T12:00:00"
+    },
+    "order": {
+      "order_id": "ORD_DISP_111",
+      "product": "Office Chair",
+      "amount": 21000,
+      "status": "fulfilled",
+      "shipping_address": "Synthetic seed address"
+    },
+    "delivery": {
+      "status": "not_delivered",
+      "delivered_at": null,
+      "address_match": false,
+      "signature_available": false,
+      "courier": "SpeedEx"
+    },
+    "refund": {
+      "issued": false
+    },
+    "support": {
+      "customer_contacted": true,
+      "merchant_response": true,
+      "conversation": "Customer claimed the item was not received. No delivery confirmation on file."
+    },
+    "filed_at": "2026-08-31T12:00:00",
+    "response_deadline": "2026-09-11T12:00:00"
+  },
+  {
+    "dispute_id": "disp_120",
+    "reason": "ITEM_NOT_RECEIVED",
+    "amount": 18500,
+    "currency": "INR",
+    "customer_id": "cust_401",
+    "merchant_id": "merch_509",
+    "payment": {
+      "payment_id": "pay_disp_120",
+      "status": "captured",
+      "amount": 18500,
+      "date": "2026-08-17T12:00:00"
+    },
+    "order": {
+      "order_id": "ORD_DISP_120",
+      "product": "Smartwatch",
+      "amount": 18500,
+      "status": "fulfilled",
+      "shipping_address": "Synthetic seed address"
+    },
+    "delivery": {
+      "status": "delivered",
+      "delivered_at": "2026-08-18T12:00:00",
+      "address_match": true,
+      "signature_available": true,
+      "courier": "BlueDart"
+    },
+    "refund": {
+      "issued": false
+    },
+    "support": {
+      "customer_contacted": true,
+      "merchant_response": true,
+      "conversation": "Customer claimed the item was not received. Merchant provided delivery confirmation."
+    },
+    "filed_at": "2026-08-20T12:00:00",
+    "response_deadline": "2026-09-07T12:00:00"
+  },
+  {
+    "dispute_id": "disp_121",
+    "reason": "ITEM_NOT_RECEIVED",
+    "amount": 42000,
+    "currency": "INR",
+    "customer_id": "cust_402",
+    "merchant_id": "merch_510",
+    "payment": {
+      "payment_id": "pay_disp_121",
+      "status": "captured",
+      "amount": 42000,
+      "date": "2026-08-18T12:00:00"
+    },
+    "order": {
+      "order_id": "ORD_DISP_121",
+      "product": "Gaming Monitor",
+      "amount": 42000,
+      "status": "fulfilled",
+      "shipping_address": "Synthetic seed address"
+    },
+    "delivery": {
+      "status": "delivered",
+      "delivered_at": "2026-08-19T12:00:00",
+      "address_match": true,
+      "signature_available": true,
+      "courier": "Delhivery"
+    },
+    "refund": {
+      "issued": false
+    },
+    "support": {
+      "customer_contacted": true,
+      "merchant_response": true,
+      "conversation": "Customer claimed the item was not received. Merchant provided delivery confirmation."
+    },
+    "filed_at": "2026-08-21T12:00:00",
+    "response_deadline": "2026-09-08T12:00:00"
+  },
+  {
+    "dispute_id": "disp_122",
+    "reason": "ITEM_NOT_RECEIVED",
+    "amount": 6800,
+    "currency": "INR",
+    "customer_id": "cust_403",
+    "merchant_id": "merch_511",
+    "payment": {
+      "payment_id": "pay_disp_122",
+      "status": "captured",
+      "amount": 6800,
+      "date": "2026-08-19T12:00:00"
+    },
+    "order": {
+      "order_id": "ORD_DISP_122",
+      "product": "Backpack",
+      "amount": 6800,
+      "status": "fulfilled",
+      "shipping_address": "Synthetic seed address"
+    },
+    "delivery": {
+      "status": "delivered",
+      "delivered_at": "2026-08-20T12:00:00",
+      "address_match": true,
+      "signature_available": true,
+      "courier": "BlueDart"
+    },
+    "refund": {
+      "issued": false
+    },
+    "support": {
+      "customer_contacted": true,
+      "merchant_response": true,
+      "conversation": "Customer claimed the item was not received. Merchant provided delivery confirmation."
+    },
+    "filed_at": "2026-08-22T12:00:00",
+    "response_deadline": "2026-09-09T12:00:00"
+  },
+  {
+    "dispute_id": "disp_123",
+    "reason": "ITEM_NOT_RECEIVED",
+    "amount": 12500,
+    "currency": "INR",
+    "customer_id": "cust_404",
+    "merchant_id": "merch_512",
+    "payment": {
+      "payment_id": "pay_disp_123",
+      "status": "captured",
+      "amount": 12500,
+      "date": "2026-08-20T12:00:00"
+    },
+    "order": {
+      "order_id": "ORD_DISP_123",
+      "product": "Blender",
+      "amount": 12500,
+      "status": "fulfilled",
+      "shipping_address": "Synthetic seed address"
+    },
+    "delivery": {
+      "status": "delivered",
+      "delivered_at": "2026-08-21T12:00:00",
+      "address_match": true,
+      "signature_available": true,
+      "courier": "Delhivery"
+    },
+    "refund": {
+      "issued": false
+    },
+    "support": {
+      "customer_contacted": true,
+      "merchant_response": true,
+      "conversation": "Customer claimed the item was not received. Merchant provided delivery confirmation."
+    },
+    "filed_at": "2026-08-23T12:00:00",
+    "response_deadline": "2026-09-10T12:00:00"
+  },
+  {
+    "dispute_id": "disp_124",
+    "reason": "ITEM_NOT_RECEIVED",
+    "amount": 27500,
+    "currency": "INR",
+    "customer_id": "cust_405",
+    "merchant_id": "merch_513",
+    "payment": {
+      "payment_id": "pay_disp_124",
+      "status": "captured",
+      "amount": 27500,
+      "date": "2026-08-21T12:00:00"
+    },
+    "order": {
+      "order_id": "ORD_DISP_124",
+      "product": "Tablet",
+      "amount": 27500,
+      "status": "fulfilled",
+      "shipping_address": "Synthetic seed address"
+    },
+    "delivery": {
+      "status": "delivered",
+      "delivered_at": "2026-08-22T12:00:00",
+      "address_match": true,
+      "signature_available": true,
+      "courier": "BlueDart"
+    },
+    "refund": {
+      "issued": false
+    },
+    "support": {
+      "customer_contacted": true,
+      "merchant_response": true,
+      "conversation": "Customer claimed the item was not received. Merchant provided delivery confirmation."
+    },
+    "filed_at": "2026-08-24T12:00:00",
+    "response_deadline": "2026-09-11T12:00:00"
+  },
+  {
+    "dispute_id": "disp_130",
+    "reason": "ITEM_NOT_RECEIVED",
+    "amount": 9200,
+    "currency": "INR",
+    "customer_id": "cust_501",
+    "merchant_id": "merch_514",
+    "payment": {
+      "payment_id": "pay_disp_130",
+      "status": "captured",
+      "amount": 9200,
+      "date": "2026-08-21T12:00:00"
+    },
+    "order": {
+      "order_id": "ORD_DISP_130",
+      "product": "Sneakers",
+      "amount": 9200,
+      "status": "fulfilled",
+      "shipping_address": "Synthetic seed address"
+    },
+    "delivery": {
+      "status": "delivered",
+      "delivered_at": "2026-08-22T12:00:00",
+      "address_match": true,
+      "signature_available": false,
+      "courier": "BlueDart"
+    },
+    "refund": {
+      "issued": false
+    },
+    "support": {
+      "customer_contacted": true,
+      "merchant_response": true,
+      "conversation": "Customer claimed the item was not received. Merchant provided delivery confirmation."
+    },
+    "filed_at": "2026-08-24T12:00:00",
+    "response_deadline": "2026-09-05T12:00:00"
+  },
+  {
+    "dispute_id": "disp_131",
+    "reason": "ITEM_NOT_RECEIVED",
+    "amount": 15800,
+    "currency": "INR",
+    "customer_id": "cust_502",
+    "merchant_id": "merch_515",
+    "payment": {
+      "payment_id": "pay_disp_131",
+      "status": "captured",
+      "amount": 15800,
+      "date": "2026-08-22T12:00:00"
+    },
+    "order": {
+      "order_id": "ORD_DISP_131",
+      "product": "Coffee Maker",
+      "amount": 15800,
+      "status": "fulfilled",
+      "shipping_address": "Synthetic seed address"
+    },
+    "delivery": {
+      "status": "delivered",
+      "delivered_at": "2026-08-23T12:00:00",
+      "address_match": false,
+      "signature_available": true,
+      "courier": "Delhivery"
+    },
+    "refund": {
+      "issued": false
+    },
+    "support": {
+      "customer_contacted": true,
+      "merchant_response": true,
+      "conversation": "Customer claimed the item was not received. Merchant provided delivery confirmation."
+    },
+    "filed_at": "2026-08-25T12:00:00",
+    "response_deadline": "2026-09-06T12:00:00"
+  },
+  {
+    "dispute_id": "disp_132",
+    "reason": "ITEM_NOT_RECEIVED",
+    "amount": 5400,
+    "currency": "INR",
+    "customer_id": "cust_503",
+    "merchant_id": "merch_516",
+    "payment": {
+      "payment_id": "pay_disp_132",
+      "status": "captured",
+      "amount": 5400,
+      "date": "2026-08-23T12:00:00"
+    },
+    "order": {
+      "order_id": "ORD_DISP_132",
+      "product": "Water Bottle",
+      "amount": 5400,
+      "status": "fulfilled",
+      "shipping_address": "Synthetic seed address"
+    },
+    "delivery": {
+      "status": "delivered",
+      "delivered_at": "2026-08-24T12:00:00",
+      "address_match": true,
+      "signature_available": true,
+      "courier": "SpeedEx"
+    },
+    "refund": {
+      "issued": false
+    },
+    "support": {
+      "customer_contacted": true,
+      "merchant_response": true,
+      "conversation": "Customer claimed the item was not received. Merchant provided delivery confirmation."
+    },
+    "filed_at": "2026-08-26T12:00:00",
+    "response_deadline": "2026-09-07T12:00:00"
+  },
+  {
+    "dispute_id": "disp_133",
+    "reason": "ITEM_NOT_RECEIVED",
+    "amount": 22000,
+    "currency": "INR",
+    "customer_id": "cust_504",
+    "merchant_id": "merch_517",
+    "payment": {
+      "payment_id": "pay_disp_133",
+      "status": "captured",
+      "amount": 22000,
+      "date": "2026-08-24T12:00:00"
+    },
+    "order": {
+      "order_id": "ORD_DISP_133",
+      "product": "Headphones",
+      "amount": 22000,
+      "status": "fulfilled",
+      "shipping_address": "Synthetic seed address"
+    },
+    "delivery": {
+      "status": "delivered",
+      "delivered_at": "2026-08-25T12:00:00",
+      "address_match": false,
+      "signature_available": false,
+      "courier": "BlueDart"
+    },
+    "refund": {
+      "issued": false
+    },
+    "support": {
+      "customer_contacted": true,
+      "merchant_response": true,
+      "conversation": "Customer claimed the item was not received. Merchant provided delivery confirmation."
+    },
+    "filed_at": "2026-08-27T12:00:00",
+    "response_deadline": "2026-09-08T12:00:00"
+  },
+  {
+    "dispute_id": "disp_140",
+    "reason": "ITEM_NOT_RECEIVED",
+    "amount": 8900,
+    "currency": "INR",
+    "customer_id": "cust_601",
+    "merchant_id": "merch_518",
+    "payment": {
+      "payment_id": "pay_disp_140",
+      "status": "captured",
+      "amount": 8900,
+      "date": "2026-08-25T12:00:00"
+    },
+    "order": {
+      "order_id": "ORD_DISP_140",
+      "product": "Charger",
+      "amount": 8900,
+      "status": "fulfilled",
+      "shipping_address": "Synthetic seed address"
+    },
+    "delivery": {
+      "status": "not_delivered",
+      "delivered_at": null,
+      "address_match": false,
       "signature_available": false,
       "courier": "Delhivery"
     },
@@ -222,9 +868,85 @@
     "support": {
       "customer_contacted": true,
       "merchant_response": true,
-      "conversation": "Same customer as an earlier dispute against a different merchant, same shipping address."
+      "conversation": "Customer claimed the item was not received. No delivery confirmation on file."
     },
-    "filed_at": "2026-08-24T09:20:00",
-    "response_deadline": "2026-09-02T09:20:00"
+    "filed_at": "2026-08-28T12:00:00",
+    "response_deadline": "2026-09-08T12:00:00"
+  },
+  {
+    "dispute_id": "disp_141",
+    "reason": "ITEM_NOT_RECEIVED",
+    "amount": 13400,
+    "currency": "INR",
+    "customer_id": "cust_602",
+    "merchant_id": "merch_519",
+    "payment": {
+      "payment_id": "pay_disp_141",
+      "status": "captured",
+      "amount": 13400,
+      "date": "2026-08-26T12:00:00"
+    },
+    "order": {
+      "order_id": "ORD_DISP_141",
+      "product": "Notebook Set",
+      "amount": 13400,
+      "status": "fulfilled",
+      "shipping_address": "Synthetic seed address"
+    },
+    "delivery": {
+      "status": "not_delivered",
+      "delivered_at": null,
+      "address_match": false,
+      "signature_available": false,
+      "courier": "BlueDart"
+    },
+    "refund": {
+      "issued": false
+    },
+    "support": {
+      "customer_contacted": true,
+      "merchant_response": true,
+      "conversation": "Customer claimed the item was not received. No delivery confirmation on file."
+    },
+    "filed_at": "2026-08-29T12:00:00",
+    "response_deadline": "2026-09-09T12:00:00"
+  },
+  {
+    "dispute_id": "disp_142",
+    "reason": "ITEM_NOT_RECEIVED",
+    "amount": 30500,
+    "currency": "INR",
+    "customer_id": "cust_603",
+    "merchant_id": "merch_520",
+    "payment": {
+      "payment_id": "pay_disp_142",
+      "status": "captured",
+      "amount": 30500,
+      "date": "2026-08-27T12:00:00"
+    },
+    "order": {
+      "order_id": "ORD_DISP_142",
+      "product": "Drone",
+      "amount": 30500,
+      "status": "fulfilled",
+      "shipping_address": "Synthetic seed address"
+    },
+    "delivery": {
+      "status": "delivered",
+      "delivered_at": "2026-08-28T12:00:00",
+      "address_match": true,
+      "signature_available": true,
+      "courier": "SpeedEx"
+    },
+    "refund": {
+      "issued": true
+    },
+    "support": {
+      "customer_contacted": true,
+      "merchant_response": true,
+      "conversation": "Customer claimed the item was not received. Merchant provided delivery confirmation."
+    },
+    "filed_at": "2026-08-30T12:00:00",
+    "response_deadline": "2026-09-12T12:00:00"
   }
 ]
