@@ -167,4 +167,11 @@ def build_timeline(dispute: dict[str, Any]) -> list[dict[str, Any]]:
             "source": "delivery",
         })
 
-    return sorted(timeline, key=lambda event: event["timestamp"])
+    # Events with no timestamp (e.g. a real-world webhook source that
+    # didn't supply one) can't be meaningfully sorted or displayed with
+    # a date — drop them rather than crash comparing None < None. This
+    # makes build_timeline safe for ANY caller with incomplete data,
+    # not just a fix for one specific webhook payload shape.
+    dated_events = [e for e in timeline if e["timestamp"] is not None]
+
+    return sorted(dated_events, key=lambda event: event["timestamp"])

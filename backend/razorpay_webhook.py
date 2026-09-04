@@ -113,7 +113,10 @@ def map_razorpay_dispute_to_internal(
             "payment_id": dispute_entity.get("payment_id", "unknown_payment"),
             "status": payment_entity.get("status", "captured"),
             "amount": amount,
-            "date": _from_unix(payment_entity.get("created_at")),
+            "date": (
+                _from_unix(payment_entity.get("created_at"))
+                or _from_unix(created_at_ts)
+            ),
         },
         "order": {
             "order_id": payment_entity.get("order_id", "unknown_order"),

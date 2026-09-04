@@ -211,6 +211,107 @@ def main():
     reset_status, _ = post("/simulate/reset")
     all_ok &= check("POST /simulate/reset returns 200", reset_status == 200)
 
+    # 8. Evaluation endpoints
+    status, body = get("/evaluation")
+    all_ok &= check("GET /evaluation returns 200", status == 200)
+    if status == 200:
+        all_ok &= check(
+            "Evaluation has primary_metric",
+            "primary_metric" in body,
+        )
+
+    status, body = get("/evaluation/multi-seed")
+    all_ok &= check("GET /evaluation/multi-seed returns 200", status == 200)
+
+    # 9. Razorpay webhook — this is the endpoint that previously crashed
+    # on a realistic payload missing optional fields (payment.entity had
+    # no created_at, which Razorpay's real webhooks often omit). Uses
+    # the exact shape that reproduced that crash, so a regression here
+    # gets caught by this script instead of shipping to a live demo.
+    import hmac
+    import hashlib
+
+    webhook_secret = "test_secret_for_smoke_test"
+    realistic_payload = {
+        "entity": "event",
+        "account_id": "acc_smoketest",
+        "event": "payment.dispute.created",
+        "payload": {
+            "payment": {
+                "entity": {
+                    "id": "pay_smoketest",
+                    "customer_id": "cust_smoketest",
+                    "status": "captured",
+                    "order_id": "order_smoketest",
+                    # Deliberately NO created_at — this is what Razorpay's
+                    # real payload often omits, and what caused the crash.
+                }
+            },
+            "dispute": {
+                "entity": {
+                    "id": "disp_smoketest",
+                    "entity": "dispute",
+                    "payment_id": "pay_smoketest",
+                    "amount": 500000,
+                    "currency": "INR",
+                    "reason_code": "item_not_received",
+                    "respond_by": 1590604200,
+                    "status": "open",
+                    "phase": "chargeback",
+                    "created_at": 1590059211,
+                    "evidence": {"summary": "Customer says item not received."},
+                }
+            },
+        },
+    }
+    body_bytes = json.dumps(realistic_payload).encode()
+    signature = hmac.new(
+        webhook_secret.encode(), body_bytes, hashlib.sha256
+    ).hexdigest()
+
+    def post_webhook(sig, raw_body):
+        req = urllib.request.Request(
+            f"{BASE}/webhook/razorpay",
+            data=raw_body,
+            headers={
+                "Content-Type": "application/json",
+                "X-Razorpay-Signature": sig,
+            },
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                return resp.status, json.loads(resp.read().decode())
+        except urllib.error.HTTPError as e:
+            return e.code, json.loads(e.read().decode())
+        except urllib.error.URLError as e:
+            return None, str(e)
+
+    wh_status, wh_body = post_webhook(signature, body_bytes)
+
+    if wh_status == 500 and "RAZORPAY_WEBHOOK_SECRET" in str(wh_body):
+        print(
+            "[SKIP] Razorpay webhook tests — RAZORPAY_WEBHOOK_SECRET not "
+            "set on the server (expected in local dev). Set it and the "
+            "matching secret above to actually exercise this endpoint."
+        )
+    else:
+        all_ok &= check(
+            "POST /webhook/razorpay with a realistic payload "
+            "(missing payment.entity.created_at) does NOT crash",
+            wh_status in (200, 400, 401),
+        )
+        all_ok &= check(
+            "  ...and specifically does not 500",
+            wh_status != 500,
+        )
+
+        bad_sig_status, bad_sig_body = post_webhook("wrong_signature", body_bytes)
+        all_ok &= check(
+            "POST /webhook/razorpay with a wrong signature is rejected (400)",
+            bad_sig_status == 400,
+        )
+
     print()
     if all_ok:
         print("All checks passed.")
